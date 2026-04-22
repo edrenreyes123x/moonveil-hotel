@@ -1,0 +1,348 @@
+
+.booking-page {
+  padding: 40px 20px;
+  min-height: calc(100vh - 80px);
+  background-color: #f9f9f9;
+}
+
+.booking-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.booking-page h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.booking-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.room-summary {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.room-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.room-details {
+  padding: 25px;
+}
+
+.room-details h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #6b4099;
+}
+
+.room-type {
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.room-description {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.room-amenities {
+  margin-bottom: 20px;
+}
+
+.room-amenities ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+.room-amenities li {
+  font-size: 14px;
+  color: #666;
+}
+
+.price-info {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6b4099;
+}
+
+.booking-form-container, .payment-container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form-container h3, .payment-container h3 {
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.booking-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.booking-form .form-group, .payment-details .form-group {
+  margin-bottom: 20px;
+}
+
+.booking-form label, .payment-details label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea,
+.payment-details input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus,
+.payment-details input:focus {
+  outline: none;
+  border-color: #6b4099;
+}
+
+.booking-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.price-summary {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  border: 1px solid #e1e1e1;
+}
+
+.price-summary h4 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.price-item:last-child {
+  border-bottom: none;
+}
+
+.price-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-top: 2px solid #6b4099;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.total-amount {
+  color: #6b4099;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #6b4099 0%, #9966cc 100%);
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 64, 153, 0.3);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  margin-top: 15px;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #fcc;
+}
+
+.payment-methods {
+  margin-bottom: 20px;
+}
+
+.method-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.method-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 15px;
+  border: 2px solid #e1e1e1;
+  border-radius: 10px;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.method-option:hover {
+  border-color: #6b4099;
+  transform: translateY(-2px);
+}
+
+.method-option input[type="radio"] {
+  margin-right: 12px;
+  transform: scale(1.2);
+}
+
+.method-icon {
+  font-weight: bold;
+  font-size: 18px;
+  color: #6b4099;
+}
+
+.method-option input[type="radio"]:checked + .method-icon {
+  color: #6b4099;
+  font-size: 20px;
+}
+
+.method-option input[type="radio"]:checked ~ div {
+  border-color: #6b4099;
+  background: #f8f9ff;
+}
+
+.payment-details {
+  border: 2px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.error-page {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.error-page h1 {
+  color: #c33;
+  margin-bottom: 20px;
+}
+
+.error-page p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.loading {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #6b4099;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .booking-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .booking-page h1 {
+    font-size: 28px;
+  }
+
+  .booking-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .room-amenities ul {
+    grid-template-columns: 1fr;
+  }
+
+  .method-options {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
