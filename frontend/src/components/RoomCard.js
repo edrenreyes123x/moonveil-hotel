@@ -37,7 +37,7 @@ function RoomCard({ room }) {
         <div className="room-footer">
           <div className="price">
             <span className="price-label">Per Night:</span>
-            <span className="price-value">${room.price}</span>
+          <span className="price-value">₱{room.price}</span>
           </div>
           <button className="btn btn-primary" onClick={handleBookNow}>
             Book Now

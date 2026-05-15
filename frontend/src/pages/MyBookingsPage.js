@@ -112,7 +112,7 @@ function MyBookingsPage() {
                     </div>
                     <div className="detail">
                       <span className="label">Total Price:</span>
-                      <span className="value price">${booking.totalPrice}</span>
+                      <span className="value price">₱{booking.totalPrice}</span>
                     </div>
                   </div>
                 </div>

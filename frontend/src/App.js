@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -10,12 +10,18 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AdminDashboard from './pages/AdminDashboard';
 import MyBookingsPage from './pages/MyBookingsPage';
+import StaffDashboard from './pages/StaffDashboard';
 import AdminGuard from './components/AdminGuard';
+import StaffGuard from './components/StaffGuard';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isAdminPage = location.pathname === '/admin';
+  const isStaffPage = location.pathname === '/staff';
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {!isAdminPage && !isStaffPage && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/rooms" element={<RoomsPage />} />
@@ -23,7 +29,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/my-bookings" element={<MyBookingsPage />} />
-        <Route 
+<Route 
           path="/admin" 
           element={
             <AdminGuard>
@@ -31,8 +37,24 @@ function App() {
             </AdminGuard>
           } 
         />
+        <Route 
+          path="/staff" 
+          element={
+            <StaffGuard>
+              <StaffDashboard />
+            </StaffGuard>
+          } 
+        />
       </Routes>
-      <Footer />
+{!isAdminPage && !isStaffPage && <Footer />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

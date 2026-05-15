@@ -10,6 +10,16 @@ const generateToken = (userId, email, role) => {
   );
 };
 
+const formatUser = (user) => ({
+  _id: user.id,
+  firstName: user.first_name,
+  lastName: user.last_name,
+  email: user.email,
+  role: user.role,
+  createdAt: user.created_at,
+  updatedAt: user.updated_at
+});
+
 const register = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -18,7 +28,7 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findByEmail(email);
     if (userExists) {
       return res.status(400).json({ message: 'Email already registered' });
     }
@@ -33,18 +43,12 @@ const register = async (req, res) => {
       role: 'user'
     });
 
-    const token = generateToken(newUser._id, newUser.email, newUser.role);
+    const token = generateToken(newUser.id, newUser.email, newUser.role);
 
     res.status(201).json({
       message: 'User registered successfully',
       token,
-      user: {
-        id: newUser._id,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        email: newUser.email,
-        role: newUser.role
-      }
+      user: formatUser(newUser)
     });
   } catch (error) {
     res.status(500).json({ message: 'Registration failed', error: error.message });
@@ -59,7 +63,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findByEmail(email);
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
@@ -69,18 +73,12 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const token = generateToken(user._id, user.email, user.role);
+    const token = generateToken(user.id, user.email, user.role);
 
     res.json({
       message: 'Login successful',
       token,
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        role: user.role
-      }
+      user: formatUser(user)
     });
   } catch (error) {
     res.status(500).json({ message: 'Login failed', error: error.message });
@@ -100,3 +98,4 @@ module.exports = {
   login,
   logout
 };
+

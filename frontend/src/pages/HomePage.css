@@ -1,7 +1,7 @@
 .home-page {
   min-height: 100vh;
 
-  background-image: url('../assets/moonveilback.jpg');
+  background-image: url('../assets/finalmoon.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -10,16 +10,10 @@
 
 
 .hero {
-  min-height: 700px;
+  min-height: 720px;
   width: 100%;
 
-  background:
-    linear-gradient(
-      rgba(107, 64, 153, 0.85),
-      rgba(153, 102, 204, 0.85)
-    ),
-    url('../assets/moonveilback.jpg');
-
+  background-image: url('../assets/finalmoon.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -49,6 +43,14 @@
   padding: 15px 40px;
   font-size: 18px;
   animation: fadeInUp 0.8s ease;
+  background: linear-gradient(135deg, #132f4c 0%, #0a1628 100%);
+  color: #d4af37;
+  border: 2px solid #d4af37;
+}
+
+.hero-btn:hover {
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 100%);
+  color: #d4af37;
 }
 
 @keyframes fadeInDown {
@@ -75,14 +77,14 @@
 
 .features {
   padding: 60px 20px;
-  background-color: #f9f9f9;
+  background-color: #0a1628;
 }
 
 .features h2 {
   text-align: center;
   font-size: 36px;
   margin-bottom: 50px;
-  color: #333;
+  color: #d4af37;
 }
 
 .features-grid {
@@ -92,12 +94,13 @@
 }
 
 .feature-card {
-  background: white;
+  background: #132f4c;
   padding: 30px;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
+  border: 1px solid #1e3a5f;
 }
 
 .feature-card:hover {
@@ -112,18 +115,18 @@
 .feature-card h3 {
   font-size: 20px;
   margin-bottom: 10px;
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .feature-card p {
-  color: #666;
+  color: #a0a0a0;
   font-size: 14px;
   line-height: 1.6;
 }
 
 .cta {
-  background: linear-gradient(135deg, #9966cc 0%, #6b4099 100%);
-  color: white;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #0a1628;
   padding: 80px 20px;
   text-align: center;
 }
@@ -136,12 +139,20 @@
 .cta p {
   font-size: 18px;
   margin-bottom: 30px;
-  color: #f0f0f0;
+  color: #0a1628;
 }
 
 .cta .btn {
   padding: 15px 40px;
   font-size: 18px;
+  background: linear-gradient(135deg, #132f4c 0%, #0a1628 100%);
+  color: #d4af37;
+  border: 2px solid #d4af37;
+}
+
+.cta .btn:hover {
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 100%);
+  color: #d4af37;
 }
 
 @media (max-width: 768px) {

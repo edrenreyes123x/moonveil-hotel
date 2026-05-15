@@ -1,8 +1,7 @@
-
 .booking-page {
   padding: 40px 20px;
   min-height: calc(100vh - 80px);
-  background-color: #f9f9f9;
+  background-color: #0a1628;
 }
 
 .booking-page .container {
@@ -14,7 +13,7 @@
   text-align: center;
   font-size: 36px;
   margin-bottom: 40px;
-  color: #333;
+  color: #d4af37;
 }
 
 .booking-content {
@@ -25,10 +24,11 @@
 }
 
 .room-summary {
-  background: white;
+  background: #132f4c;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #1e3a5f;
 }
 
 .room-image img {
@@ -44,17 +44,17 @@
 .room-details h2 {
   font-size: 24px;
   margin-bottom: 8px;
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .room-type {
-  color: #666;
+  color: #a0a0a0;
   font-weight: 500;
   margin-bottom: 15px;
 }
 
 .room-description {
-  color: #555;
+  color: #e0e0e0;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -74,31 +74,32 @@
 
 .room-amenities li {
   font-size: 14px;
-  color: #666;
+  color: #a0a0a0;
 }
 
 .price-info {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #1e3a5f;
   padding-top: 15px;
 }
 
 .price {
   font-size: 20px;
   font-weight: bold;
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .booking-form-container, .payment-container {
-  background: white;
+  background: #132f4c;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #1e3a5f;
 }
 
 .booking-form-container h3, .payment-container h3 {
   font-size: 24px;
   margin-bottom: 25px;
-  color: #333;
+  color: #d4af37;
 }
 
 .booking-form .form-row {
@@ -116,7 +117,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #333;
+  color: #e0e0e0;
 }
 
 .booking-form input,
@@ -125,11 +126,13 @@
 .payment-details input {
   width: 100%;
   padding: 12px;
-  border: 2px solid #e1e1e1;
+  border: 2px solid #1e3a5f;
   border-radius: 8px;
   font-size: 16px;
   transition: border-color 0.3s ease;
   box-sizing: border-box;
+  background: #0a1628;
+  color: #e0e0e0;
 }
 
 .booking-form input:focus,
@@ -137,7 +140,7 @@
 .booking-form textarea:focus,
 .payment-details input:focus {
   outline: none;
-  border-color: #6b4099;
+  border-color: #d4af37;
 }
 
 .booking-form textarea {
@@ -146,16 +149,16 @@
 }
 
 .price-summary {
-  background: #f8f9fa;
+  background: #0a1628;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 25px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid #1e3a5f;
 }
 
 .price-summary h4 {
   margin-bottom: 15px;
-  color: #333;
+  color: #d4af37;
 }
 
 .price-breakdown {
@@ -169,7 +172,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid #1e3a5f;
 }
 
 .price-item:last-child {
@@ -181,25 +184,26 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 0;
-  border-top: 2px solid #6b4099;
+  border-top: 2px solid #d4af37;
   font-weight: bold;
   font-size: 18px;
+  color: #e0e0e0;
 }
 
 .total-amount {
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .btn {
   display: inline-block;
   padding: 15px 30px;
-  background: linear-gradient(135deg, #6b4099 0%, #9966cc 100%);
-  color: white;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #0a1628;
   text-decoration: none;
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: 100%;
@@ -209,7 +213,7 @@
 
 .btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(107, 64, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .btn:disabled {
@@ -219,17 +223,18 @@
 }
 
 .btn-secondary {
-  background: #6c757d;
+  background: #1e3a5f;
+  color: #e0e0e0;
   margin-top: 15px;
 }
 
 .error-message {
-  background: #fee;
-  color: #c33;
+  background: #3d1a1a;
+  color: #ff6b6b;
   padding: 12px;
   border-radius: 6px;
   margin-bottom: 20px;
-  border: 1px solid #fcc;
+  border: 1px solid #5c2a2a;
 }
 
 .payment-methods {
@@ -247,14 +252,15 @@
   align-items: center;
   cursor: pointer;
   padding: 15px;
-  border: 2px solid #e1e1e1;
+  border: 2px solid #1e3a5f;
   border-radius: 10px;
   transition: border-color 0.3s ease, transform 0.2s ease;
   position: relative;
+  background: #0a1628;
 }
 
 .method-option:hover {
-  border-color: #6b4099;
+  border-color: #d4af37;
   transform: translateY(-2px);
 }
 
@@ -266,24 +272,25 @@
 .method-icon {
   font-weight: bold;
   font-size: 18px;
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .method-option input[type="radio"]:checked + .method-icon {
-  color: #6b4099;
+  color: #d4af37;
   font-size: 20px;
 }
 
 .method-option input[type="radio"]:checked ~ div {
-  border-color: #6b4099;
-  background: #f8f9ff;
+  border-color: #d4af37;
+  background: #132f4c;
 }
 
 .payment-details {
-  border: 2px solid #e1e1e1;
+  border: 2px solid #1e3a5f;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
+  background: #0a1628;
 }
 
 .error-page {
@@ -292,12 +299,12 @@
 }
 
 .error-page h1 {
-  color: #c33;
+  color: #ff6b6b;
   margin-bottom: 20px;
 }
 
 .error-page p {
-  color: #666;
+  color: #a0a0a0;
   margin-bottom: 30px;
 }
 
@@ -309,8 +316,8 @@
 .spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #6b4099;
+  border: 5px solid #1e3a5f;
+  border-top: 5px solid #d4af37;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 20px;
@@ -345,4 +352,3 @@
     gap: 10px;
   }
 }
-

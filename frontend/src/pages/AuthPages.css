@@ -3,22 +3,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6b4099 0%, #9966cc 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #132f4c 100%);
   padding: 20px;
 }
 
 .auth-container {
-  background: white;
+  background: #132f4c;
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 500px;
+  border: 1px solid #1e3a5f;
 }
 
 .auth-container h1 {
   text-align: center;
-  color: #6b4099;
+  color: #d4af37;
   margin-bottom: 30px;
   font-size: 28px;
 }
@@ -41,7 +42,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: #e0e0e0;
 }
 
 .form-group input {
@@ -55,8 +56,8 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #6b4099;
-  box-shadow: 0 0 5px rgba(107, 64, 153, 0.3);
+  border-color: #d4af37;
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
 }
 
 .auth-form .btn {
@@ -86,19 +87,19 @@
 
 .auth-link {
   text-align: center;
-  color: #666;
+  color: #a0a0a0;
   font-size: 14px;
 }
 
 .auth-link a {
-  color: #6b4099;
+  color: #d4af37;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .auth-link a:hover {
-  color: #5a3882;
+  color: #b8860b;
   text-decoration: underline;
 }
 
@@ -119,17 +120,17 @@
 .test-credentials {
   margin-top: 20px;
   padding: 15px;
-  background: #f8f9fa;
+  background: #132f4c;
   border-radius: 8px;
-  border: 1px solid #e1e1e1;
+  border: 1px solid #1e3a5f;
 }
 
 .test-credentials p {
   margin: 5px 0;
   font-size: 13px;
-  color: #666;
+  color: #a0a0a0;
 }
 
 .test-credentials strong {
-  color: #6b4099;
+  color: #d4af37;
 }

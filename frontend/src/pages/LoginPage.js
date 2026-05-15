@@ -17,7 +17,7 @@ function LoginPage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -32,45 +32,39 @@ function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        // Fall through to mock login if backend fails
-        throw new Error(data.message || 'Login failed');
+        setError(data.message || 'Login failed');
+        setLoading(false);
+        return;
       }
 
-      // Store user data including role in localStorage
-      localStorage.setItem('token', data.token || 'mock-token-' + Date.now());
-      localStorage.setItem('userName', data.user?.firstName || formData.email.split('@')[0]);
-      localStorage.setItem('userRole', data.user?.role || 'user');
-      localStorage.setItem('userId', data.user?.id || '');
+      console.log('Login response:', data);
+
+      // Store user data including role in localStorage - use real IDs from backend
+      const token = data.token || data.token;
+      const userId = data.user?._id || data.user?.id;
+      const userName = data.user?.firstName || formData.email.split('@')[0];
+      const userRole = data.user?.role || 'user';
+      
+      localStorage.setItem('token', token);
+      localStorage.setItem('userName', userName);
+      localStorage.setItem('userRole', userRole);
+      localStorage.setItem('userId', String(userId || ''));
+
+      console.log('Stored userId:', userId, 'role:', userRole);
 
       // Notify navbar of auth change
       window.dispatchEvent(new Event('authChange'));
 
       // Redirect to admin dashboard if admin, otherwise to home
-      if (data.user?.role === 'admin') {
+      if (userRole === 'admin') {
         navigate('/admin');
       } else {
         navigate('/');
       }
+      setLoading(false);
     } catch (err) {
-      // Mock login for testing - works even without backend
-      if (formData.email && formData.password) {
-        const isAdmin = formData.email.toLowerCase() === 'admin@moonveil.com' && formData.password === 'admin123';
-        localStorage.setItem('token', 'mock-token-' + Date.now());
-        localStorage.setItem('userName', isAdmin ? 'Admin' : formData.email.split('@')[0]);
-        localStorage.setItem('userRole', isAdmin ? 'admin' : 'user');
-        localStorage.setItem('userId', isAdmin ? '1' : '2');
-        
-        // Notify navbar of auth change
-        window.dispatchEvent(new Event('authChange'));
-        
-        if (isAdmin) {
-          navigate('/admin');
-        } else {
-          navigate('/');
-        }
-      } else {
-        setError('Please fill in all fields');
-      }
+      console.error('Login error:', err);
+      setError('Login failed. Please try again.');
       setLoading(false);
     }
   };

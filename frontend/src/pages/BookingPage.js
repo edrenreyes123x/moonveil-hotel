@@ -177,13 +177,17 @@ function BookingPage() {
 
       const data = await response.json();
 
+      console.log('Booking response:', response.status, data); // Debug log
+
       if (!response.ok) {
-        setError(data.message || 'Booking failed');
+        // Show detailed backend error
+        setError(data.message || data.error || 'Booking failed. Please check dates, availability, or try another payment method.');
         setSubmitting(false);
         return;
       }
 
       alert('Payment successful! Booking confirmed.');
+      setError('');
       navigate('/my-bookings');
     } catch (err) {
       console.error('Error creating booking:', err);
@@ -234,7 +238,7 @@ function BookingPage() {
                 </ul>
               </div>
               <div className="price-info">
-                <span className="price">${room.price} per night</span>
+                <span className="price">₱{room.price} per night</span>
               </div>
             </div>
           </div>
@@ -306,12 +310,12 @@ function BookingPage() {
                   <h4>Price Summary</h4>
                   <div className="price-breakdown">
                     <div className="price-item">
-                      <span>${room.price} × {Math.ceil((new Date(bookingData.checkOut) - new Date(bookingData.checkIn)) / (1000 * 60 * 60 * 24))} nights</span>
-                      <span>${totalPrice}</span>
+                      <span>₱{room.price} × {Math.ceil((new Date(bookingData.checkOut) - new Date(bookingData.checkIn)) / (1000 * 60 * 60 * 24))} nights</span>
+                      <span>₱{totalPrice}</span>
                     </div>
                     <div className="price-total">
-                      <span>Total:</span>
-                      <span className="total-amount">${totalPrice}</span>
+<span>Total:</span>
+                      <span className="total-amount">₱{totalPrice}</span>
                     </div>
                   </div>
                 </div>
@@ -376,19 +380,19 @@ function BookingPage() {
 
               {paymentData.method === 'gcash' && (
                 <div className="payment-details">
-                  <p>GCash payment of ${totalPrice} will be processed securely.</p>
+                  <p>GCash payment of ₱{totalPrice} will be processed securely.</p>
                 </div>
               )}
 
               {['visa', 'mastercard'].includes(paymentData.method) && (
                 <div className="payment-details">
-                  <p>Card payment of ${totalPrice} will be processed securely.</p>
+                  <p>Card payment of ₱{totalPrice} will be processed securely.</p>
                 </div>
               )}
 
               {paymentData.method === 'paypal' && (
                 <div className="payment-details">
-                  <p>PayPal payment of ${totalPrice} will be processed securely.</p>
+                  <p>PayPal payment of ₱{totalPrice} will be processed securely.</p>
                 </div>
               )}
 
@@ -399,7 +403,7 @@ function BookingPage() {
               )}
 
               <div className="price-summary">
-                <h4>Total: ${totalPrice}</h4>
+                <h4>Total: ₱{totalPrice}</h4>
               </div>
 
               <button type="submit" className="btn btn-primary" disabled={submitting}>

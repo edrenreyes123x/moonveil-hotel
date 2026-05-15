@@ -1,9 +1,19 @@
 const User = require('../models/User');
 
+const formatUser = (user) => ({
+  _id: user.id,
+  firstName: user.first_name,
+  lastName: user.last_name,
+  email: user.email,
+  role: user.role,
+  createdAt: user.created_at,
+  updatedAt: user.updated_at
+});
+
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}).select('-password');
-    res.json(users);
+    const users = await User.findAll();
+    res.json(users.map(formatUser));
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error: error.message });
   }
@@ -11,11 +21,11 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select('-password');
+    const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    res.json(user);
+    res.json(formatUser(user));
   } catch (error) {
     res.status(500).json({ message: 'Error fetching user', error: error.message });
   }
@@ -29,13 +39,13 @@ const updateUser = async (req, res) => {
     }
 
     const { firstName, lastName, email } = req.body;
-    if (firstName !== undefined) user.firstName = firstName;
-    if (lastName !== undefined) user.lastName = lastName;
-    if (email !== undefined) user.email = email;
+    const updates = {};
+    if (firstName !== undefined) updates.firstName = firstName;
+    if (lastName !== undefined) updates.lastName = lastName;
+    if (email !== undefined) updates.email = email;
 
-    await user.save();
-    const updatedUser = await User.findById(user._id).select('-password');
-    res.json({ message: 'User updated successfully', user: updatedUser });
+    const updatedUser = await User.update(req.params.id, updates);
+    res.json({ message: 'User updated successfully', user: formatUser(updatedUser) });
   } catch (error) {
     res.status(500).json({ message: 'Error updating user', error: error.message });
   }
@@ -43,7 +53,7 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await User.deleteById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -59,3 +69,4 @@ module.exports = {
   updateUser,
   deleteUser
 };
+

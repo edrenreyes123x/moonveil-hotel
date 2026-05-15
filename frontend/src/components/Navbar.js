@@ -61,12 +61,18 @@ function Navbar() {
         <ul className="navbar-menu">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/rooms">Rooms</Link></li>
-          {isLoggedIn ? (
+{isLoggedIn ? (
             <>
               {userRole === 'admin' && (
                 <li><Link to="/admin" className="admin-link">Admin Dashboard</Link></li>
               )}
-              <li><Link to="/my-bookings">My Bookings</Link></li>
+              {userRole === 'staff' && (
+                <li><Link to="/staff" className="staff-link">Front Desk</Link></li>
+              )}
+              {/* Show My Bookings only for customers (non-admin, non-staff) */}
+              {userRole === 'user' && (
+                <li><Link to="/my-bookings">My Bookings</Link></li>
+              )}
               <li className="user-info">👤 {userName}</li>
               <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
             </>

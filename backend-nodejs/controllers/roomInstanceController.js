@@ -1,10 +1,28 @@
 const RoomInstance = require('../models/RoomInstance');
 const Room = require('../models/Room');
 
+const formatInstance = (instance) => ({
+  _id: instance.id,
+  typeId: instance.type_id,
+  roomNumber: instance.room_number,
+  floor: instance.floor,
+  status: instance.status,
+  typeName: instance.type_name,
+  price: parseFloat(instance.price),
+  createdAt: instance.created_at,
+  updatedAt: instance.updated_at,
+  typeId: instance.type_id ? {
+    _id: instance.type_id,
+    name: instance.room_name,
+    type: instance.room_type,
+    price: parseFloat(instance.room_price)
+  } : undefined
+});
+
 const getAllRoomInstances = async (req, res) => {
   try {
-    const instances = await RoomInstance.find({}).populate('typeId', 'name type price');
-    res.json(instances);
+    const instances = await RoomInstance.findAll();
+    res.json(instances.map(formatInstance));
   } catch (error) {
     res.status(500).json({ message: 'Error fetching room instances', error: error.message });
   }
@@ -12,8 +30,8 @@ const getAllRoomInstances = async (req, res) => {
 
 const getRoomInstancesByType = async (req, res) => {
   try {
-    const instances = await RoomInstance.find({ typeId: req.params.typeId }).populate('typeId');
-    res.json(instances);
+    const instances = await RoomInstance.findByTypeId(req.params.typeId);
+    res.json(instances.map(formatInstance));
   } catch (error) {
     res.status(500).json({ message: 'Error fetching room instances', error: error.message });
   }
@@ -21,8 +39,8 @@ const getRoomInstancesByType = async (req, res) => {
 
 const getAvailableRoomInstances = async (req, res) => {
   try {
-    const instances = await RoomInstance.find({ status: 'Available' }).populate('typeId');
-    res.json(instances);
+    const instances = await RoomInstance.findAvailable();
+    res.json(instances.map(formatInstance));
   } catch (error) {
     res.status(500).json({ message: 'Error fetching available rooms', error: error.message });
   }
@@ -30,7 +48,7 @@ const getAvailableRoomInstances = async (req, res) => {
 
 const createRoomInstance = async (req, res) => {
   try {
-    const { typeId, roomNumber } = req.body;
+    const { typeId, roomNumber, floor } = req.body;
     const roomType = await Room.findById(typeId);
     if (!roomType) {
       return res.status(404).json({ message: 'Room type not found' });
@@ -39,12 +57,14 @@ const createRoomInstance = async (req, res) => {
     const instance = await RoomInstance.create({
       typeId,
       roomNumber,
+      floor,
       typeName: roomType.name,
       price: roomType.price,
       status: 'Available'
     });
 
-    res.status(201).json({ message: 'Room instance created', instance });
+    const fullInstance = await RoomInstance.findById(instance.id);
+    res.status(201).json({ message: 'Room instance created', instance: formatInstance(fullInstance) });
   } catch (error) {
     res.status(500).json({ message: 'Error creating room instance', error: error.message });
   }
@@ -58,11 +78,12 @@ const updateRoomInstance = async (req, res) => {
     }
 
     const { status } = req.body;
-    if (status !== undefined) instance.status = status;
+    const updates = {};
+    if (status !== undefined) updates.status = status;
 
-    await instance.save();
-    await instance.populate('typeId');
-    res.json({ message: 'Room instance updated', instance });
+    const updatedInstance = await RoomInstance.update(req.params.id, updates);
+    const fullInstance = await RoomInstance.findById(updatedInstance.id);
+    res.json({ message: 'Room instance updated', instance: formatInstance(fullInstance) });
   } catch (error) {
     res.status(500).json({ message: 'Error updating room instance', error: error.message });
   }
@@ -70,7 +91,7 @@ const updateRoomInstance = async (req, res) => {
 
 const deleteRoomInstance = async (req, res) => {
   try {
-    const instance = await RoomInstance.findByIdAndDelete(req.params.id);
+    const instance = await RoomInstance.deleteById(req.params.id);
     if (!instance) {
       return res.status(404).json({ message: 'Room instance not found' });
     }
@@ -88,3 +109,4 @@ module.exports = {
   updateRoomInstance,
   deleteRoomInstance
 };
+

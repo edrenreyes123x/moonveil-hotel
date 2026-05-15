@@ -70,7 +70,7 @@ function RoomsPage() {
           name: 'Standard Room',
           type: 'Single',
           price: 80,
-          description: 'Comfortable room perfect for solo travelers and budget-conscious guests',
+          description: 'Comfortable room perfect for solo and couple travelers and budget-conscious guests',
           amenities: ['WiFi', 'AC', 'Shower'],
           rating: 4.2,
           image: standardImg
@@ -134,7 +134,7 @@ function RoomsPage() {
             <h3>Filters</h3>
             
             <div className="filter-group">
-              <label>Price Range: ${filters.priceRange}</label>
+<label>Price Range: ₱{filters.priceRange}</label>
               <input 
                 type="range" 
                 name="priceRange" 

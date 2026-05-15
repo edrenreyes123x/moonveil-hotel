@@ -1,9 +1,24 @@
 const Room = require('../models/Room');
 
+const formatRoom = (room) => ({
+  _id: room.id,
+  name: room.name,
+  type: room.type,
+  price: parseFloat(room.price),
+  description: room.description,
+  amenities: room.amenities || [],
+  image: room.image,
+  rating: parseFloat(room.rating),
+  available: room.available,
+  bookings: room.bookings,
+  createdAt: room.created_at,
+  updatedAt: room.updated_at
+});
+
 const getAllRooms = async (req, res) => {
   try {
-    const rooms = await Room.find({});
-    res.json(rooms);
+    const rooms = await Room.findAll();
+    res.json(rooms.map(formatRoom));
   } catch (error) {
     res.status(500).json({ message: 'Error fetching rooms', error: error.message });
   }
@@ -15,7 +30,7 @@ const getRoomById = async (req, res) => {
     if (!room) {
       return res.status(404).json({ message: 'Room not found' });
     }
-    res.json(room);
+    res.json(formatRoom(room));
   } catch (error) {
     res.status(500).json({ message: 'Error fetching room', error: error.message });
   }
@@ -39,7 +54,7 @@ const createRoom = async (req, res) => {
       bookings: 0
     });
 
-    res.status(201).json({ message: 'Room created successfully', room: newRoom });
+    res.status(201).json({ message: 'Room created successfully', room: formatRoom(newRoom) });
   } catch (error) {
     res.status(500).json({ message: 'Error creating room', error: error.message });
   }
@@ -53,15 +68,16 @@ const updateRoom = async (req, res) => {
     }
 
     const { name, type, price, description, amenities, available } = req.body;
-    if (name !== undefined) room.name = name;
-    if (type !== undefined) room.type = type;
-    if (price !== undefined) room.price = price;
-    if (description !== undefined) room.description = description;
-    if (amenities !== undefined) room.amenities = amenities;
-    if (available !== undefined) room.available = available;
+    const updates = {};
+    if (name !== undefined) updates.name = name;
+    if (type !== undefined) updates.type = type;
+    if (price !== undefined) updates.price = price;
+    if (description !== undefined) updates.description = description;
+    if (amenities !== undefined) updates.amenities = amenities;
+    if (available !== undefined) updates.available = available;
 
-    await room.save();
-    res.json({ message: 'Room updated successfully', room });
+    const updatedRoom = await Room.update(req.params.id, updates);
+    res.json({ message: 'Room updated successfully', room: formatRoom(updatedRoom) });
   } catch (error) {
     res.status(500).json({ message: 'Error updating room', error: error.message });
   }
@@ -69,7 +85,7 @@ const updateRoom = async (req, res) => {
 
 const deleteRoom = async (req, res) => {
   try {
-    const room = await Room.findByIdAndDelete(req.params.id);
+    const room = await Room.deleteById(req.params.id);
     if (!room) {
       return res.status(404).json({ message: 'Room not found' });
     }
@@ -86,3 +102,4 @@ module.exports = {
   updateRoom,
   deleteRoom
 };
+

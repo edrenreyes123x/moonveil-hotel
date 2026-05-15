@@ -1,10 +1,10 @@
 .rooms-page {
   min-height: 100vh;
 
-  background-image:
+  background:
     linear-gradient(
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0.9)
+      rgba(10, 22, 40, 0.95),
+      rgba(10, 22, 40, 0.95)
     ),
     url('../assets/dashboard-bg.jpg');
 
@@ -20,7 +20,7 @@
   text-align: center;
   font-size: 36px;
   margin-bottom: 40px;
-  color: #333;
+  color: #d4af37;
 }
 
 .rooms-content {
@@ -32,18 +32,19 @@
 }
 
 .filters-sidebar {
-  background: white;
+  background: #132f4c;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   height: fit-content;
   position: sticky;
   top: 80px;
+  border: 1px solid #1e3a5f;
 }
 
 .filters-sidebar h3 {
   margin-bottom: 20px;
-  color: #6b4099;
+  color: #d4af37;
   font-size: 18px;
 }
 
@@ -55,7 +56,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: #e0e0e0;
   font-size: 14px;
 }
 
@@ -67,10 +68,11 @@
 .filter-group select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #1e3a5f;
   border-radius: 5px;
   font-size: 14px;
-  background-color: white;
+  background-color: #0a1628;
+  color: #e0e0e0;
 }
 
 .filters-sidebar .btn {
@@ -80,15 +82,15 @@
 
 .rooms-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
 }
 
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
   padding: 60px 20px;
-  color: #999;
+  color: #a0a0a0;
   font-size: 18px;
 }
 

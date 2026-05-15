@@ -1,13 +1,114 @@
-.cd-dashboard {
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #0a1628;
+}
+
+/* Sidebar Styles */
+.admin-sidebar {
+  width: 220px;
+  background: linear-gradient(180deg, #132f4c 0%, #0a1628 100%);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  border-right: 1px solid #1e3a5f;
+}
+
+.sidebar-header {
+  padding: 25px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h2 {
+  color: #d4af37;
+  margin: 0;
+  font-size: 22px;
+  text-align: center;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebar-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.sidebar-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.sidebar-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-left: 4px solid #fff;
+}
+
+.sidebar-icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.sidebar-text {
+  font-weight: 500;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-footer .admin-user-info {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.btn-logout {
+  width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Main Content Area */
+.admin-main-content {
+  flex: 1;
+  margin-left: 220px;
   padding: 0;
-  min-height: calc(100vh - 80px);
-  background-color: #f5f5f5;
 }
 
 .admin-header {
-  background: linear-gradient(135deg, #6b4099 0%, #9966cc 100%);
+  background: linear-gradient(135deg, #132f4c 0%, #0a1628 100%);
   padding: 30px 0;
   margin-bottom: 30px;
+  border-bottom: 1px solid #1e3a5f;
 }
 
 .admin-header-content {
@@ -17,7 +118,7 @@
 }
 
 .admin-header h1 {
-  color: white;
+  color: #d4af37;
   margin: 0;
   text-align: left;
 }
@@ -130,22 +231,22 @@
   text-align: center;
   font-size: 36px;
   margin-bottom: 40px;
-  color: white;
+  color: #d4af37;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .dashboard-content h2 {
-  color: #333;
+  color: #e0e0e0;
 }
 
 .dashboard-tabs {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
-  background: white;
+  background: #132f4c;
   border-radius: 12px;
   padding: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .tab-btn {
@@ -157,25 +258,26 @@
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.3s ease;
-  color: #666;
+  color: #a0a0a0;
 }
 
 .tab-btn.active {
-  background: linear-gradient(135deg, #6b4099 0%, #9966cc 100%);
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
   color: white;
-  box-shadow: 0 2px 8px rgba(107, 64, 153, 0.3);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
 
 .tab-btn:hover:not(.active) {
-  background: #f0f0f0;
-  color: #333;
+  background: #1e3a5f;
+  color: #d4af37;
 }
 
 .dashboard-content {
-  background: white;
+  background: #132f4c;
   border-radius: 12px;
   padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #1e3a5f;
 }
 
 .section-header {
@@ -187,8 +289,19 @@
 
 .section-header h2 {
   font-size: 24px;
-  color: #333;
+  color: #d4af37;
   margin: 0;
+}
+
+/* Room Management Section Headers */
+.rooms-management > div h3 {
+  color: #d4af37;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.rooms-section h2 {
+  color: #d4af37;
 }
 
 /* Rooms Section */
@@ -199,7 +312,8 @@
 }
 
 .room-item {
-  border: 1px solid #e1e1e1;
+  background: #0a1628;
+  border: 2px solid #d4af37;
   border-radius: 8px;
   padding: 20px;
   display: flex;
@@ -208,29 +322,64 @@
   transition: box-shadow 0.3s ease;
 }
 
+.room-item .room-image {
+  width: 180px;
+  height: 120px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.room-item .room-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .room-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .room-info h3 {
   margin: 0 0 8px 0;
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .room-type {
-  color: #666;
+  color: #d4af37;
   margin: 0 0 4px 0;
   font-weight: 500;
 }
 
+/* Room Instance specific styles */
+.instance-room-number {
+  color: #d4af37;
+  font-weight: 600;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.instance-type-name {
+  color: #d4af37;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.instance-floor {
+  color: #d4af37;
+  font-size: 14px;
+  margin-right: 12px;
+}
+
 .room-price {
-  color: #333;
+  color: #d4af37;
   font-weight: bold;
   margin: 0 0 4px 0;
 }
 
 .room-bookings {
-  color: #888;
+  color: #d4af37;
   font-size: 14px;
   margin: 0;
 }
@@ -263,12 +412,12 @@
 
 .booking-info h3 {
   margin: 0 0 8px 0;
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .booking-info p {
   margin: 4px 0;
-  color: #666;
+  color: #a0a0a0;
   font-size: 14px;
 }
 
@@ -338,12 +487,12 @@
 
 .user-info h3 {
   margin: 0 0 4px 0;
-  color: #6b4099;
+  color: #d4af37;
 }
 
 .user-info p {
   margin: 0;
-  color: #666;
+  color: #a0a0a0;
 }
 
 .user-actions {
@@ -443,13 +592,13 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #6b4099 0%, #9966cc 100%);
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
   color: white;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(107, 64, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .btn-secondary {
@@ -504,6 +653,67 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .sidebar-header {
+    display: none;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .sidebar-btn {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 15px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .sidebar-icon {
+    font-size: 20px;
+  }
+
+  .sidebar-text {
+    font-size: 11px;
+  }
+
+  .sidebar-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .sidebar-footer .admin-user-info {
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+
+  .btn-logout {
+    width: auto;
+    padding: 8px 15px;
+  }
+
+  .admin-main-content {
+    margin-left: 0;
+  }
+
   .dashboard-tabs {
     flex-direction: column;
   }
@@ -573,7 +783,7 @@
     font-size: 12px;
   }
 
-  .payments-table th,
+.payments-table th,
   .payments-table td {
     padding: 8px 4px;
   }
@@ -582,7 +792,7 @@
 /* Dashboard Overview */
 .dashboard-overview h2 {
   font-size: 24px;
-  color: #333;
+  color: #eeeb0b;
   margin-bottom: 20px;
 }
 
@@ -594,12 +804,12 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #6b4099 0%, #9966cc 100%);
-  color: white;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #0a1628;
   padding: 25px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(107, 64, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .stat-card h3 {
@@ -623,8 +833,14 @@
 /* Payment Section */
 .payments-section h2 {
   font-size: 24px;
-  color: #333;
+  color: #d4af37;
   margin-bottom: 20px;
+}
+
+.payments-list h3 {
+  font-size: 18px;
+  color: #d4af37;
+  margin-bottom: 15px;
 }
 
 .payment-stats {
@@ -635,8 +851,8 @@
 }
 
 .payment-stat-card {
-  background: white;
-  border: 2px solid #e1e1e1;
+  background: #0a1628;
+  border: 2px solid #d4af37;
   padding: 25px;
   border-radius: 12px;
   text-align: center;
@@ -646,24 +862,14 @@
   margin: 0 0 10px 0;
   font-size: 14px;
   font-weight: 500;
-  color: #666;
+  color: #d4af37;
 }
 
 .payment-stat-card .stat-value {
   margin: 0;
   font-size: 32px;
   font-weight: bold;
-  color: #6b4099;
-}
-
-.payment-stat-card.stat-pending .stat-value {
-  color: #ffc107;
-}
-
-.payments-list h3 {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 15px;
+  color: #d4af37;
 }
 
 .payments-table {
@@ -733,6 +939,25 @@
   color: #999;
   padding: 40px;
   font-size: 16px;
+}
+
+/* Booking Actions */
+.action-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.action-group label {
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+}
+
+.hint-text {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
 }
 
 /* Payment Status in Bookings */

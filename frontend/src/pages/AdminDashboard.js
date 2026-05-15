@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 import { API_URL } from '../services/api';
+import deluxeImg from '../assets/rooms/deluxe.jpg';
+import suiteImg from '../assets/rooms/suite.jpg';
+import standardImg from '../assets/rooms/standard.jpg';
+import penthouseImg from '../assets/rooms/penthouse.jpg';
+
+function getImageByRoom(room) {
+  const images = {
+    'Deluxe Room': deluxeImg,
+    'Suite Room': suiteImg,
+    'Standard Room': standardImg,
+    'Penthouse': penthouseImg
+  };
+  return images[room.name] || null;
+}
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -71,89 +85,6 @@ function AdminDashboard() {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Mock data for testing
-      setRooms([
-        {
-          _id: '1',
-          name: 'Deluxe Room',
-          type: 'Double',
-          price: 150,
-          description: 'Spacious room with stunning city view',
-          amenities: ['WiFi', 'AC', 'Mini Bar'],
-          available: true,
-          bookings: 45
-        },
-        {
-          _id: '2',
-          name: 'Suite Room',
-          type: 'Suite',
-          price: 250,
-          description: 'Luxurious suite with ocean view',
-          amenities: ['WiFi', 'AC', 'Mini Bar', 'Jacuzzi'],
-          available: true,
-          bookings: 30
-        }
-      ]);
-      setBookings([
-        {
-          _id: '1',
-          roomName: 'Deluxe Room',
-          guestName: 'John Doe',
-          guestEmail: 'john@example.com',
-          checkIn: '2026-02-15',
-          checkOut: '2026-02-18',
-          guests: 2,
-          totalPrice: 450,
-          status: 'Confirmed',
-          paymentStatus: 'Paid',
-          paymentDate: '2026-02-10'
-        },
-        {
-          _id: '2',
-          roomName: 'Suite Room',
-          guestName: 'Jane Smith',
-          guestEmail: 'jane@example.com',
-          checkIn: '2026-03-01',
-          checkOut: '2026-03-05',
-          guests: 3,
-          totalPrice: 1200,
-          status: 'Pending',
-          paymentStatus: 'Pending',
-          paymentDate: null
-        }
-      ]);
-      setUsers([
-        {
-          _id: '1',
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'john@example.com'
-        },
-        {
-          _id: '2',
-          firstName: 'Jane',
-          lastName: 'Smith',
-          email: 'jane@example.com'
-        }
-      ]);
-      setPaymentHistory({
-        totalRevenue: 4150,
-        totalTransactions: 2,
-        pendingCount: 1,
-        payments: [
-          {
-            bookingId: '1',
-            roomName: 'Deluxe Room',
-            guestName: 'John Doe',
-            guestEmail: 'john@example.com',
-            checkIn: '2026-02-15',
-            checkOut: '2026-02-18',
-            totalPrice: 450,
-            paymentDate: '2026-02-10',
-            status: 'Confirmed'
-          }
-        ]
-      });
       setLoading(false);
     }
   };
@@ -207,9 +138,10 @@ function AdminDashboard() {
     }
   };
 
-  const handleUpdateBookingStatus = async (bookingId, status) => {
+  // Room Instance handlers
+  const handleUpdateRoomInstanceStatus = async (instanceId, status) => {
     try {
-      const response = await fetch(`${API_URL}/api/bookings/admin/${bookingId}`, {
+      const response = await fetch(`${API_URL}/api/room-instances/${instanceId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -220,38 +152,36 @@ function AdminDashboard() {
 
       if (response.ok) {
         fetchData();
-        alert('Booking status updated successfully');
+        alert('Room instance status updated');
         return;
       }
 
-      // Handle error response
       const errorData = await response.json();
-      console.error('Update booking error:', errorData);
-      alert(errorData.message || `Error: ${errorData.details || 'Failed to update status'}`);
+      alert(errorData.message || 'Failed to update room instance status');
     } catch (error) {
-      console.error('Error updating booking:', error);
+      console.error('Error updating room instance:', error);
       alert('Network error. Please check if backend server is running.');
     }
   };
 
-  const handleDeleteBooking = async (bookingId) => {
-    if (!window.confirm('Are you sure you want to delete this booking?')) {
+const handleDeleteRoomInstance = async (instanceId) => {
+    if (!window.confirm('Are you sure you want to delete this room instance?')) {
       return;
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/bookings/admin/${bookingId}`, {
+      const response = await fetch(`${API_URL}/api/room-instances/${instanceId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
 
       if (response.ok) {
         fetchData();
-        alert('Booking deleted successfully');
+        alert('Room instance deleted successfully');
       }
     } catch (error) {
-      console.error('Error deleting booking:', error);
-      alert('Error deleting booking');
+      console.error('Error deleting room instance:', error);
+      alert('Error deleting room instance');
     }
   };
 
@@ -263,7 +193,7 @@ function AdminDashboard() {
     navigate('/');
   };
 
-  const getUserName = () => {
+const getUserName = () => {
     return localStorage.getItem('userName') || 'Admin';
   };
 
@@ -276,54 +206,58 @@ function AdminDashboard() {
     );
   }
 
-  return (
+return (
     <div className="admin-dashboard">
+      {/* Sidebar Navigation */}
+      <div className="admin-sidebar">
+<div className="sidebar-header">
+          <h2>Admin Panel</h2>
+        </div>
+        <nav className="sidebar-nav">
+          <button
+            className={`sidebar-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            <span className="sidebar-icon">📊</span>
+            <span className="sidebar-text">Dashboard</span>
+          </button>
+          <button
+            className={`sidebar-btn ${activeTab === 'rooms' ? 'active' : ''}`}
+            onClick={() => setActiveTab('rooms')}
+          >
+            <span className="sidebar-icon">🛏️</span>
+            <span className="sidebar-text">Rooms ({rooms.length})</span>
+          </button>
 
-
-      <div className="admin-header">
-        <div className="container">
-          <div className="admin-header-content">
-            <h1>Admin Dashboard</h1>
-            <div className="admin-user-info">
-                <span>Welcome, {getUserName()}</span>
-              </div>
-
+<button
+            className={`sidebar-btn ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => setActiveTab('users')}
+          >
+            <span className="sidebar-icon">👥</span>
+            <span className="sidebar-text">Users ({users.length})</span>
+          </button>
+          <button
+            className={`sidebar-btn ${activeTab === 'payments' ? 'active' : ''}`}
+            onClick={() => setActiveTab('payments')}
+          >
+            <span className="sidebar-icon">💳</span>
+            <span className="sidebar-text">Payments</span>
+          </button>
+        </nav>
+        <div className="sidebar-footer">
+          <div className="admin-user-info">
+            <span>Welcome, {getUserName()}</span>
           </div>
+          <button className="btn btn-logout" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
 
-      <div className="container">
-        <div className="dashboard-tabs">
-          <button
-            className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
-            onClick={() => setActiveTab('dashboard')}
-          >
-            Dashboard
-          </button>
-<button
-            className={`tab-btn ${activeTab === 'rooms' ? 'active' : ''}`}
-            onClick={() => setActiveTab('rooms')}
-          >
-            Room Types ({rooms.length}) | Instances ({roomInstances.length})
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'bookings' ? 'active' : ''}`}
-            onClick={() => setActiveTab('bookings')}
-          >
-            Bookings ({bookings.length})
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'payments' ? 'active' : ''}`}
-            onClick={() => setActiveTab('payments')}
-          >
-            Payments
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
-            onClick={() => setActiveTab('users')}
-          >
-            Users ({users.length})
-          </button>
+      {/* Main Content Area */}
+      <div className="admin-main-content">
+        <div className="admin-header">
+          <h1>Admin Dashboard</h1>
         </div>
 
         <div className="dashboard-content">
@@ -332,8 +266,8 @@ function AdminDashboard() {
               <h2>Hotel Overview</h2>
               <div className="stats-grid">
                 <div className="stat-card">
-                  <h3>Total Revenue</h3>
-                  <p className="stat-value">${paymentHistory?.totalRevenue || 0}</p>
+<h3>Total Revenue</h3>
+                  <p className="stat-value">₱{paymentHistory?.totalRevenue || 0}</p>
                 </div>
                 <div className="stat-card">
                   <h3>Total Bookings</h3>
@@ -402,7 +336,7 @@ function AdminDashboard() {
                         </div>
                       </div>
                       <div className="form-group">
-                        <label>Price per Night ($)</label>
+<label>Price per Night (₱)</label>
                         <input
                           type="number"
                           value={newRoom.price}
@@ -445,35 +379,41 @@ function AdminDashboard() {
 
               <div className="rooms-management">
                 <div>
-                  <h3>Room Types ({rooms.length})</h3>
+<h3>Room Types ({rooms.length})</h3>
                   <div className="rooms-list">
-                    {rooms.map(room => (
-                      <div key={room._id} className="room-item">
-                        <div className="room-info">
-                          <h3>{room.name}</h3>
-                          <p className="room-type">{room.type}</p>
-                          <p className="room-price">${room.price}/night</p>
-                          <p className="room-bookings">{room.bookings || 0} bookings</p>
+                    {rooms.map(room => {
+                      const roomImage = getImageByRoom(room);
+                      return (
+                        <div key={room._id} className="room-item">
+                          <div className="room-image">
+                            {roomImage && <img src={roomImage} alt={room.name} />}
+                          </div>
+                          <div className="room-info">
+                            <h3>{room.name}</h3>
+                            <p className="room-type">{room.type}</p>
+                            <p className="room-price">₱{room.price}/night</p>
+<p className="room-bookings">Total Bookings: {room.bookings || 0}</p>
+                          </div>
+                          <div className="room-actions">
+                          </div>
                         </div>
-                        <div className="room-actions">
-                          <button className="btn btn-secondary">Edit</button>
-                          <button className="btn btn-danger" onClick={() => handleDeleteRoom(room._id)}>
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
-                <div>
+<div>
                   <h3>Room Instances ({roomInstances.length})</h3>
                   <div className="rooms-list">
-{roomInstances.map(instance => (
+                    {roomInstances.map(instance => (
                       <div key={instance._id} className="room-item">
                         <div className="room-info">
-                          <h3>{instance.roomNumber} ({instance.typeName})</h3>
-                          <p className="room-price">${instance.price}/night</p>
+                          <h3>
+                            <span className="instance-room-number">{instance.roomNumber}</span>
+                            {instance.floor && <span className="instance-floor">Floor {instance.floor}</span>}
+                            <span className="instance-type-name">({instance.typeName})</span>
+                          </h3>
+                          <p className="room-price">₱{instance.price}/night</p>
                           <span className={`status-badge status-${instance.status.toLowerCase()}`}>
                             {instance.status}
                           </span>
@@ -481,6 +421,7 @@ function AdminDashboard() {
                         <div className="room-actions">
                           <select 
                             value={instance.status}
+                            onChange={(e) => handleUpdateRoomInstanceStatus(instance._id, e.target.value)}
                             className="status-select"
                           >
                             <option value="Available">Available</option>
@@ -488,9 +429,6 @@ function AdminDashboard() {
                             <option value="Maintenance">Maintenance</option>
                             <option value="Not Available">Not Available</option>
                           </select>
-                          <button className="btn btn-danger" disabled>
-                            Delete
-                          </button>
                         </div>
                       </div>
                     ))}
@@ -500,40 +438,19 @@ function AdminDashboard() {
             </div>
           )}
 
-          {activeTab === 'bookings' && (
-            <div className="bookings-section">
-              <h2>Booking Management</h2>
-              <div className="bookings-list">
-                {bookings.map(booking => (
-                  <div key={booking._id} className="booking-item">
-                    <div className="booking-info">
-                      <h3>{booking.roomName}</h3>
-                      <p>Guest: {booking.guestName || booking.guestEmail}</p>
-                      <p>Check-in: {new Date(booking.checkIn).toLocaleDateString()}</p>
-                      <p>Check-out: {new Date(booking.checkOut).toLocaleDateString()}</p>
-                      <p>Guests: {booking.guests}</p>
-                      <p>Total: ${booking.totalPrice}</p>
-                      <p className={`payment-status payment-${booking.paymentStatus?.toLowerCase() || 'pending'}`}>
-                        Payment: {booking.paymentStatus || 'Pending'}
-                      </p>
+{activeTab === 'users' && (
+            <div className="users-section">
+              <h2>User Management</h2>
+              <div className="users-list">
+                {users.map(user => (
+                  <div key={user._id} className="user-item">
+                    <div className="user-info">
+                      <h3>{user.firstName} {user.lastName}</h3>
+                      <p>{user.email}</p>
+                      <p className="user-bookings">Bookings: {user.bookings || 0}</p>
                     </div>
-                    <div className="booking-actions">
-                      <select
-                        value={booking.status}
-                        onChange={(e) => handleUpdateBookingStatus(booking._id, e.target.value)}
-                        className={`status-select status-${booking.status.toLowerCase()}`}
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Cancelled">Cancelled</option>
-                        <option value="Completed">Completed</option>
-                      </select>
-                      <button 
-                        className="btn btn-danger"
-                        onClick={() => handleDeleteBooking(booking._id)}
-                      >
-                        Delete
-                      </button>
+                    <div className="user-actions">
+                      <button className="btn btn-secondary">View Details</button>
                     </div>
                   </div>
                 ))}
@@ -547,8 +464,8 @@ function AdminDashboard() {
               
               <div className="payment-stats">
                 <div className="payment-stat-card">
-                  <h3>Total Revenue</h3>
-                  <p className="stat-value">${paymentHistory?.totalRevenue || 0}</p>
+<h3>Total Revenue</h3>
+                  <p className="stat-value">₱{paymentHistory?.totalRevenue || 0}</p>
                 </div>
                 <div className="payment-stat-card">
                   <h3>Completed Transactions</h3>
@@ -587,7 +504,7 @@ function AdminDashboard() {
                           </td>
                           <td>{new Date(payment.checkIn).toLocaleDateString()}</td>
                           <td>{new Date(payment.checkOut).toLocaleDateString()}</td>
-                          <td className="amount">${payment.totalPrice}</td>
+<td className="amount">₱{payment.totalPrice}</td>
                           <td>{payment.paymentDate ? new Date(payment.paymentDate).toLocaleDateString() : '-'}</td>
                           <td>
                             <span className={`status-badge status-${payment.status?.toLowerCase()}`}>
@@ -601,26 +518,6 @@ function AdminDashboard() {
                 ) : (
                   <p className="no-data">No payment history available</p>
                 )}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'users' && (
-            <div className="users-section">
-              <h2>User Management</h2>
-              <div className="users-list">
-                {users.map(user => (
-                  <div key={user._id} className="user-item">
-                    <div className="user-info">
-                      <h3>{user.firstName} {user.lastName}</h3>
-                      <p>{user.email}</p>
-                      <p className="user-bookings">Bookings: {user.bookings || 0}</p>
-                    </div>
-                    <div className="user-actions">
-                      <button className="btn btn-secondary">View Details</button>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           )}
